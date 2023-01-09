@@ -8,13 +8,14 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
+	cli2 "github.com/cosmos/cosmos-sdk/tests/integration/nft/cli"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	"github.com/cosmos/cosmos-sdk/x/nft"
 	"github.com/cosmos/cosmos-sdk/x/nft/client/cli"
 )
 
-func (s *CLITestSuite) TestQueryClass() {
+func (s *cli2.CLITestSuite) TestQueryClass() {
 	testCases := []struct {
 		name         string
 		args         []string
@@ -22,12 +23,12 @@ func (s *CLITestSuite) TestQueryClass() {
 	}{
 		{
 			name:         "json output",
-			args:         []string{testClassID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
 			expCmdOutput: `[kitty --output=json]`,
 		},
 		{
 			name:         "text output",
-			args:         []string{testClassID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
 			expCmdOutput: `[kitty --output=text]`,
 		},
 	}
@@ -54,7 +55,7 @@ func (s *CLITestSuite) TestQueryClass() {
 	}
 }
 
-func (s *CLITestSuite) TestQueryClasses() {
+func (s *cli2.CLITestSuite) TestQueryClasses() {
 	testCases := []struct {
 		name         string
 		flagArgs     []string
@@ -93,7 +94,7 @@ func (s *CLITestSuite) TestQueryClasses() {
 	}
 }
 
-func (s *CLITestSuite) TestQueryNFT() {
+func (s *cli2.CLITestSuite) TestQueryNFT() {
 	testCases := []struct {
 		name         string
 		args         []string
@@ -101,12 +102,12 @@ func (s *CLITestSuite) TestQueryNFT() {
 	}{
 		{
 			name:         "json output",
-			args:         []string{testClassID, testID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, cli2.testID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
 			expCmdOutput: `[kitty kitty1 --output=json]`,
 		},
 		{
 			name:         "text output",
-			args:         []string{testClassID, testID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, cli2.testID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
 			expCmdOutput: `[kitty kitty1 --output=text]`,
 		},
 	}
@@ -133,7 +134,7 @@ func (s *CLITestSuite) TestQueryNFT() {
 	}
 }
 
-func (s *CLITestSuite) TestQueryNFTs() {
+func (s *cli2.CLITestSuite) TestQueryNFTs() {
 	accounts := testutil.CreateKeyringAccounts(s.T(), s.kr, 1)
 
 	testCases := []struct {
@@ -160,7 +161,7 @@ func (s *CLITestSuite) TestQueryNFTs() {
 				ClassID string
 				Owner   string
 			}{
-				ClassID: testClassID,
+				ClassID: cli2.testClassID,
 				Owner:   accounts[0].Address.String(),
 			},
 			expectErr: false,
@@ -189,7 +190,7 @@ func (s *CLITestSuite) TestQueryNFTs() {
 	}
 }
 
-func (s *CLITestSuite) TestQueryOwner() {
+func (s *cli2.CLITestSuite) TestQueryOwner() {
 	testCases := []struct {
 		name         string
 		args         []string
@@ -197,12 +198,12 @@ func (s *CLITestSuite) TestQueryOwner() {
 	}{
 		{
 			name:         "json output",
-			args:         []string{testClassID, testID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, cli2.testID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
 			expCmdOutput: `[kitty kitty1 --output=json]`,
 		},
 		{
 			name:         "text output",
-			args:         []string{testClassID, testID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, cli2.testID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
 			expCmdOutput: `[kitty kitty1 --output=text]`,
 		},
 	}
@@ -229,7 +230,7 @@ func (s *CLITestSuite) TestQueryOwner() {
 	}
 }
 
-func (s *CLITestSuite) TestQueryBalance() {
+func (s *cli2.CLITestSuite) TestQueryBalance() {
 	accounts := testutil.CreateKeyringAccounts(s.T(), s.kr, 1)
 
 	testCases := []struct {
@@ -239,12 +240,12 @@ func (s *CLITestSuite) TestQueryBalance() {
 	}{
 		{
 			name:         "json output",
-			args:         []string{accounts[0].Address.String(), testClassID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
+			args:         []string{accounts[0].Address.String(), cli2.testClassID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
 			expCmdOutput: fmt.Sprintf("%s kitty --output=json", accounts[0].Address.String()),
 		},
 		{
 			name:         "text output",
-			args:         []string{accounts[0].Address.String(), testClassID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
+			args:         []string{accounts[0].Address.String(), cli2.testClassID, fmt.Sprintf("--%s=text", flags.FlagOutput)},
 			expCmdOutput: fmt.Sprintf("%s kitty --output=text", accounts[0].Address.String()),
 		},
 	}
@@ -271,7 +272,7 @@ func (s *CLITestSuite) TestQueryBalance() {
 	}
 }
 
-func (s *CLITestSuite) TestQuerySupply() {
+func (s *cli2.CLITestSuite) TestQuerySupply() {
 	testCases := []struct {
 		name         string
 		args         []string
@@ -279,7 +280,7 @@ func (s *CLITestSuite) TestQuerySupply() {
 	}{
 		{
 			name:         "valid case",
-			args:         []string{testClassID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
+			args:         []string{cli2.testClassID, fmt.Sprintf("--%s=json", flags.FlagOutput)},
 			expCmdOutput: `[kitty --output=json]`,
 		},
 	}
